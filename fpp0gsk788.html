@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СРОЧНО: ДТП на дороге — web</title>
+<meta property="og:title" content="ДТП: web">
+<meta property="og:description" content="Срочно! Смотри что произошло рядом с нами:">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f5f5f5;color:#222}
+  .header{background:#1a1a2e;color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:3px solid #e8b800}
+  .logo{font-size:19px;font-weight:900}
+  .logo em{color:#e8b800;font-style:normal}
+  .date{font-size:11px;opacity:.7;margin-left:auto}
+  .breaking{background:#e8b800;color:#000;text-align:center;padding:8px;font-weight:900;font-size:13px;letter-spacing:2px}
+  .container{max-width:680px;margin:0 auto;padding:12px}
+  .card{background:#fff;border-radius:6px;overflow:hidden;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+  .accident-banner{width:100%;height:200px;background:linear-gradient(160deg,#1a1a2e,#16213e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative}
+  .lights{display:flex;gap:16px;margin-bottom:6px}
+  .light{width:28px;height:28px;border-radius:50%;animation:flash 0.8s infinite alternate}
+  .light.red{background:#ff2222;animation-delay:0s}
+  .light.blue{background:#2222ff;animation-delay:.4s}
+  @keyframes flash{from{opacity:1;box-shadow:0 0 18px currentColor}to{opacity:.2}}
+  .accident-banner .icon{font-size:72px}
+  .road-tape{background:#e8b800;color:#000;font-weight:900;font-size:10px;letter-spacing:4px;padding:4px 14px;position:absolute;bottom:14px}
+  .card-body{padding:14px}
+  .card-tag{font-size:11px;color:#c47300;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .card-title{font-size:20px;font-weight:800;line-height:1.25;margin-bottom:8px}
+  .card-meta{font-size:11px;color:#888;margin-bottom:10px}
+  .card-text{font-size:14px;line-height:1.65;color:#333}
+  .card-text p{margin-bottom:8px}
+  .stats-row{display:flex;gap:8px;margin:12px 0}
+  .stat{flex:1;background:#fff8e6;border:1px solid #ffe0a0;border-radius:6px;padding:10px;text-align:center}
+  .stat-num{font-size:22px;font-weight:900;color:#c47300}
+  .stat-label{font-size:11px;color:#666;margin-top:2px}
+  .video-block{background:#111;border-radius:6px;overflow:hidden;cursor:pointer;position:relative;margin:16px 0}
+  .video-inner{width:100%;height:185px;background:linear-gradient(135deg,#0a0a14,#1a1a2e);display:flex;align-items:center;justify-content:center;font-size:72px}
+  .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:62px;height:62px;background:rgba(232,184,0,.92);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .play-btn:after{content:'';border-left:24px solid #000;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:6px}
+  .video-caption{color:#aaa;font-size:12px;padding:7px 10px;background:#111}
+  .cta-btn{display:block;text-align:center;background:#1a1a2e;color:#e8b800!important;padding:15px;border-radius:6px;font-size:15px;font-weight:900;text-decoration:none;margin:16px 0;border:2px solid #e8b800}
+  .cta-btn:hover{background:#16213e}
+  .ticker{background:#1a1a2e;color:#e8b800;font-size:12px;padding:6px 12px;overflow:hidden}
+  .ticker span{display:inline-block;white-space:nowrap;animation:scr 22s linear infinite}
+  @keyframes scr{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+  footer{text-align:center;font-size:11px;color:#aaa;padding:20px 12px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">🚗 <em>ДТП</em>Репортаж</div>
+  <div class="date" id="dt"></div>
+</div>
+<div class="breaking">🚨 ЭКСТРЕННОЕ ДТП — ТРАССА ПЕРЕКРЫТА 🚨</div>
+<div class="ticker"><span>🚔 Сотрудники ГИБДД работают на месте &nbsp;•&nbsp; Движение ограничено &nbsp;•&nbsp; Скорая помощь на месте &nbsp;•&nbsp; Подробности — в нашем Telegram &nbsp;•&nbsp;</span></div>
+<div class="container">
+  <div class="card">
+    <div class="accident-banner">
+      <div class="lights"><div class="light red"></div><div class="light blue"></div><div class="light red"></div></div>
+      <div class="icon">🚗💥🚛</div>
+      <div class="road-tape">МЕСТО ДТП — ОБЪЕЗД!</div>
+    </div>
+    <div class="card-body">
+      <div class="card-tag">🚨 ДТП · Срочно</div>
+      <div class="card-title">web</div>
+      <div class="card-meta">Только что &nbsp;·&nbsp; <span id="time"></span> &nbsp;·&nbsp; ДТПРепортаж</div>
+      <div class="card-text">
+        <p>Срочно! Смотри что произошло рядом с нами:</p>
+        <p>На место выехали несколько экипажей ГИБДД, бригады скорой медицинской помощи и сотрудники МЧС. Участники дорожного движения просят объезжать место аварии.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num" id="s1">...</div><div class="stat-label">Машин в аварии</div></div>
+    <div class="stat"><div class="stat-num" id="s2">...</div><div class="stat-label">Пострадавших</div></div>
+    <div class="stat"><div class="stat-num" id="s3">...</div><div class="stat-label">Экипажей на месте</div></div>
+  </div>
+  <div class="video-block" onclick="window.open('https://t.me/+DuRnOAgGW6M5OGJl','_blank')">
+    <div class="video-inner">📸</div>
+    <div class="play-btn"></div>
+    <div class="video-caption">▶ Видео с места ДТП — снято очевидцами</div>
+  </div>
+  <a class="cta-btn" href="https://t.me/+DuRnOAgGW6M5OGJl" target="_blank">📺 Смотреть видео с места ДТП</a>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-tag">🗺 Информация для водителей</div>
+      <div class="card-title" style="font-size:16px">Как объехать</div>
+      <div class="card-text">
+        <p>⚡ Включён реверсивный светофор на смежном участке</p>
+        <p>⚡ Рекомендуется объезд через параллельную улицу</p>
+        <p>⚡ Пробки ожидаются до устранения последствий аварии</p>
+        <p>⚡ Актуальные обновления — в нашем Telegram-канале</p>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>© ДТПРепортаж · Дорожный мониторинг · <span id="yr"></span></footer>
+<script>
+  var d=new Date();
+  document.getElementById('dt').textContent=d.toLocaleDateString('ru',{day:'2-digit',month:'long'});
+  document.getElementById('time').textContent=d.toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('yr').textContent=d.getFullYear();
+  document.getElementById('s1').textContent=Math.floor(Math.random()*4+2);
+  document.getElementById('s2').textContent=Math.floor(Math.random()*5+1);
+  document.getElementById('s3').textContent=Math.floor(Math.random()*6+3);
+</script>
+</body>
+</html>
